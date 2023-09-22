@@ -1,0 +1,37 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body class="bg-secondary">
+    <div class="bg-dark d-flex justify-content-end p-3">
+        <a class="btn btn-sm btn-outline-danger text-decoration-none " href="/">Home</a>
+        <span class="flex-grow-1"></span>
+        <a class="btn btn-sm btn-outline-danger text-decoration-none mx-2" href="/register">Register</a>
+        <a class="btn btn-sm btn-outline-danger text-decoration-none " href="/login">Login</a>
+    </div>
+    <div>
+        <form class="container  d-flex flex-column align-items-center form-row" action="" method="POST">
+            {% csrf_token %}
+            <h1 class="h4 mb-5 mt-5">Login Page</h1>
+            <div class="col-sm-3">
+                <p class="h6">UserName:</p>
+                <input class="form-control" type="text" placeholder="steve" name="username" required>
+                <br>
+                <p class="h6">Password:</p>
+                <input class="form-control" type="password" name="password" required>
+            </div>
+
+            <button class="btn btn-primary btn-sm mt-5" type="submit">submit</button>
+            <a class="p my-5" href="/">go to home</a>
+        </form>
+    </div>
+
+</body>
+
+</html>
