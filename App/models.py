@@ -1,8 +1,9 @@
 from django.db import models
 from django.forms import ValidationError
 from django.core import validators
-# Create your models here.
 
+
+# Create your models here.
 
 class Login_table(models.Model):
     id = models.AutoField(primary_key=True, verbose_name ='ID')

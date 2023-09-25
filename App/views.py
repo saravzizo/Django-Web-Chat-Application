@@ -1,7 +1,10 @@
 from django.shortcuts import render, redirect
+
+from .forms import *
 from .models import Login_table, Register_table
 from django.http import HttpResponse
 from django.template import loader
+from .import views
 
 def Home(request):
     return render(request, 'home.html')
@@ -23,15 +26,25 @@ def Register(request):
 global var1
 
 def Login(request):
-    if request.method == 'POST':
-        if request.POST.get('username') and request.POST.get('password'):
-            post = Login_table()
-            post.username = request.POST.get('username')
-            post.password = request.POST.get('password')
-            post.save()
-        return redirect('/login_page')
+    # if request.method == 'POST':
+    #     if request.POST.get('username') and request.POST.get('password'):
+    #         post = Login_table()
+    #         post.username = request.POST.get('username')
+    #         post.password = request.POST.get('password')
+    #         post.save()
+    #     return redirect('/login_page')
+
+    if request.method =='POST': 
+        details = PostForm(request.POST)
+        if details.is_valid(): 
+            post = details.save(commit = False)
+            post.save() 
+            return redirect('/login_page')
+        else:
+           return render(request, 'login.html',)
     else:
-        return render(request, 'login.html')
+        form = PostForm(None)  
+        return render(request, 'login.html',)
 
 
 def view_data(request):

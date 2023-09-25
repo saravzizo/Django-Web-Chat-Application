@@ -17,10 +17,12 @@
     </div>
     <div>
         <form class="container  d-flex flex-column align-items-center form-row" action="" method="POST">
+            <input type='hidden'/>
             {% csrf_token %}
+           
             <h1 class="h4 mb-5 mt-5">Login Page</h1>
             <div class="col-sm-3">
-                <p class="h6">UserName:</p>
+                <span>{{error}}</span>
                 <input class="form-control" type="text" placeholder="steve" name="username" required>
                 <br>
                 <p class="h6">Password:</p>

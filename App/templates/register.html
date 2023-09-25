@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -17,7 +18,7 @@
         <a class="btn btn-sm btn-outline-danger text-decoration-none " href="/login">Login</a>
     </div>
     <div>
-        <form class="container  d-flex flex-column align-items-center form-row" action="" method="POST">
+        <form class="container float-left d-flex flex-column align-items-center form-row" action="" method="POST">
             {% csrf_token %}
             <h1 class="h4 mb-5 mt-5">Registration Page</h1>
             
@@ -28,8 +29,9 @@
                 <p class="h6">Lastname:</p>
                 <input class="form-control" type="text" placeholder="Rogers" name="lastname" required>
                 <br>
+                
                 <p class="h6">Email ID:</p>
-                <input class="form-control" type="email" placeholder="steve@gmail.com" name="email" required>
+                <input class="form-control" type="email" placeholder="steve@gmail.com" name="email" data-validatord="[VALIDATORS.validate_mail] " required>
                 <br>
                 <p class="h6">Password:</p>
                 <input class="form-control" type="password" required>
