@@ -17,31 +17,30 @@
         <a class="btn btn-sm btn-outline-danger text-decoration-none mx-2" href="/register">Register</a>
         <a class="btn btn-sm btn-outline-danger text-decoration-none " href="/login">Login</a>
     </div>
-    <div>
-        <form class="container float-left d-flex flex-column align-items-center form-row" action="" method="POST">
+    <div class="container-lg shadow-lg m-5 bg-light w-25 rounded " >
+        <form class=" d-flex flex-column align-items-center px-4" action="" method="POST">
             {% csrf_token %}
             <h1 class="h4 mb-5 mt-5">Registration Page</h1>
             
-            <div class="col-sm-3">
+            <div class="w-100 ">
                 <p class="h6">Firstname:</p>
-                <input class="form-control" type="text" placeholder="steve" name="firstname" required>
+                <input class="form-control form-control-sm" type="text" placeholder="steve" name="firstname" required>
                 <br>
                 <p class="h6">Lastname:</p>
-                <input class="form-control" type="text" placeholder="Rogers" name="lastname" required>
+                <input class="form-control form-control-sm" type="text" placeholder="Rogers" name="lastname" required>
                 <br>
                 
                 <p class="h6">Email ID:</p>
-                <input class="form-control" type="email" placeholder="steve@gmail.com" name="email" data-validatord="[VALIDATORS.validate_mail] " required>
+                <input class="form-control form-control-sm" type="email" placeholder="steve@gmail.com" name="email" data-validatord="[VALIDATORS.validate_mail] " required>
                 <br>
                 <p class="h6">Password:</p>
-                <input class="form-control" type="password" required>
+                <input class="form-control form-control-sm" type="password" required>
                 <br>
                 <p class="h6">Confirm Password:</p>
-                <input class="form-control" type="password" name="password" required>
+                <input class="form-control form-control-sm" type="password" name="password" required>
             </div>
 
-            <button class="btn btn-primary btn-sm mt-5" type="submit">submit</button>
-            <a class="p my-5" href="/">go to home</a>
+            <button class="btn btn-primary btn-sm my-5 " type="submit">submit</button>
         </form>
     </div>
 
