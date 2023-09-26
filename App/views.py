@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-
 from .forms import *
 from .models import Login_table, Register_table
 from django.http import HttpResponse
