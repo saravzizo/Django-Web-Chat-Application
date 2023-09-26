@@ -17,7 +17,12 @@ def Register(request):
             post.email = request.POST.get('email')
             post.password = request.POST.get('password')
             post.save()
-        return render(request, 'home.html')
+            msg = "Registration Successfull please login"
+            context={
+                "msg":msg
+            }
+            template = loader.get_template('register.html')
+        return HttpResponse(template.render(context, request))
     
     else:
         return render(request, "register.html")
