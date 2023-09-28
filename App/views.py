@@ -21,8 +21,8 @@ def Register(request):
             post.email = request.POST.get('email')
             post.password = request.POST.get('password')
             post.save()
-        return render(request, 'home.html')
-    
+            success = True
+        return render(request, "register.html", {"success": success})
     else:
         return render(request, "register.html")
 
