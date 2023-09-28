@@ -12,7 +12,11 @@ class Login_table(models.Model):
 
 
 def validate_mail(value):
-    if "@gmail.com" or "@yahoo.com" or "@outlook.com" in value:
+    if "@gmail.com" in value:
+        return value
+    if "@yahoo.com" in value:
+        return value 
+    if "@outlook.com" in value:
         return value
     else:
         raise ValidationError("Please enter a valid mail id")

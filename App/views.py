@@ -1,3 +1,5 @@
+
+from django.contrib import messages
 from django.shortcuts import render, redirect
 from .forms import *
 from .models import Login_table, Register_table
@@ -5,24 +7,28 @@ from django.http import HttpResponse
 from django.template import loader
 from .import views
 
+
 def Home(request):
     return render(request, 'home.html')
 
+
 def Register(request):
     if request.method == 'POST':
-        if request.POST.get('firstname') and request.POST.get('lastname') and request.POST.get('email')  and request.POST.get('password'):
+        if request.POST.get('firstname') and request.POST.get('lastname') and request.POST.get('email') and request.POST.get('password'):
             post = Register_table()
             post.firstname = request.POST.get('firstname')
             post.lastname = request.POST.get('lastname')
             post.email = request.POST.get('email')
             post.password = request.POST.get('password')
             post.save()
-        return render(request, 'home.html')
-    
+            success = True
+        return render(request, "register.html", {"success": success})
     else:
         return render(request, "register.html")
 
+
 global var1
+
 
 def Login(request):
     # if request.method == 'POST':
@@ -32,17 +38,20 @@ def Login(request):
     #         post.password = request.POST.get('password')
     #         post.save()
     #     return redirect('/login_page')
-
-    if request.method =='POST': 
+    context = {}
+    form = PostForm(request.POST or None)
+    context['form'] = form
+    if request.method == 'POST':
         details = PostForm(request.POST)
-        if details.is_valid(): 
-            post = details.save(commit = False)
-            post.save() 
-            return redirect('/login_page')
+        if details.is_valid():
+            post = details.save(commit=False)
+            post.save()
+            # return redirect('/login_page')
+            return render(request, "login.html", context)
         else:
-           return render(request, 'login.html',)
+            return render(request, 'login.html',)
     else:
-        form = PostForm(None)  
+        form = PostForm(None)
         return render(request, 'login.html',)
 
 
