@@ -1,14 +1,19 @@
+from django import forms
 from django.db import models
 from django.forms import ValidationError
 from django.core import validators
 
 
+def validate_password_model(value):
+    if len(value)<10:
+        raise ValidationError("Please enter more than 10 digit")
+    
 # Create your models here.
 
 class Login_table(models.Model):
     id = models.AutoField(primary_key=True, verbose_name ='ID')
     username = models.CharField(max_length=200, unique=True)
-    password = models.CharField(max_length=250)
+    password = models.CharField(max_length=250 , validators=[validate_password_model])
 
 
 def validate_mail(value):

@@ -15,24 +15,39 @@
         <a class="btn btn-sm btn-outline-danger text-decoration-none mx-2" href="/register">Register</a>
         <a class="btn btn-sm btn-outline-danger text-decoration-none " href="/login">Login</a>
     </div>
+    {% block content %}
+
     <div class="shadow-lg m-5 bg-light rounded col-md-5 col-lg-4 col-xl-4 col-sm-4">
         <form class="d-flex flex-column align-items-center px-2" action="" method="POST">
             {% csrf_token %}
-             {{form}}
-            <h1 class="h4 my-4">Login Page</h1>
             <div class="w-75">
-               
-                <p class="h6">Username:</p>
-                <input class="form-control form-control-sm" type="text" placeholder="steve" name="username" required>
+                <h1 class="h4 my-4 justify-content-center d-flex">Login Page</h1>
+                {% for field in form %}
+                <p class="h6">{{ field.label }}:</p>
+                {{ field }}
+                {% if field.errors %}
+                <div class="alert alert-danger p-0 m-0">
+                    {{ field.errors }}
+                </div>
+                {% endif %}
                 <br>
-                <p class="h6">Password:</p>
-                <input class="form-control form-control-sm" type="password" name="password" required>
+                {% endfor %}
+                <button class="btn btn-primary btn-sm mt-3 mb-4" type="submit">submit</button>
             </div>
-
-            <button class="btn btn-primary btn-sm my-5" type="submit">submit</button>
         </form>
     </div>
+    <style>
+        li {
+            list-style-type: none;
+            font-size: 10px;
+        }
 
+        ul {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+    {% endblock %}
 </body>
 
 </html>

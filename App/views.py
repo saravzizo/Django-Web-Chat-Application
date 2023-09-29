@@ -31,28 +31,20 @@ global var1
 
 
 def Login(request):
-    # if request.method == 'POST':
-    #     if request.POST.get('username') and request.POST.get('password'):
-    #         post = Login_table()
-    #         post.username = request.POST.get('username')
-    #         post.password = request.POST.get('password')
-    #         post.save()
-    #     return redirect('/login_page')
     context = {}
-    form = PostForm(request.POST or None)
+    form = Login_Form_Model(request.POST or None)
     context['form'] = form
     if request.method == 'POST':
-        details = PostForm(request.POST)
+        details = Login_Form_Model(request.POST)
         if details.is_valid():
             post = details.save(commit=False)
-            post.save()
-            # return redirect('/login_page')
-            return render(request, "login.html", context)
+            post.save() 
+            return render(request, "success.html", context)
         else:
-            return render(request, 'login.html',)
+            return render(request, 'login.html',context)
     else:
-        form = PostForm(None)
-        return render(request, 'login.html',)
+        form = Login_Form_Model(None)
+        return render(request, 'login.html',context)
 
 
 def view_data(request):
@@ -63,3 +55,4 @@ def view_data(request):
     }
 
     return HttpResponse(template.render(context, request))
+
