@@ -3,19 +3,14 @@ from django.db import models
 from django.forms import ValidationError
 from django.core import validators
 
+def validate_username_model(value):
+    if len(value) <10:
+        raise ValidationError("Please enter more than 10 digit")
 
 def validate_password_model(value):
-    if len(value)<10:
-        raise ValidationError("Please enter more than 10 digit")
+    if len(value)<6:
+        raise ValidationError("Please enter more than 6 digit")
     
-# Create your models here.
-
-class Login_table(models.Model):
-    id = models.AutoField(primary_key=True, verbose_name ='ID')
-    username = models.CharField(max_length=200, unique=True)
-    password = models.CharField(max_length=250 , validators=[validate_password_model])
-
-
 def validate_mail(value):
     if "@gmail.com" in value:
         return value
@@ -24,11 +19,20 @@ def validate_mail(value):
     if "@outlook.com" in value:
         return value
     else:
-        raise ValidationError("Please enter a valid mail id")
+        raise ValidationError("Email should contain valid domain")
+    
+# Create your models here
 
 class Register_table(models.Model):
-    id = models.AutoField(primary_key=True,verbose_name ='ID')
-    firstname = models.CharField(max_length=200,validators=[validators.MinLengthValidator(6)])
-    lastname = models.CharField(max_length=200)
-    email = models.EmailField(max_length=254,unique=True ,validators=[validate_mail])
-    password = models.CharField(max_length=250)
+    id = models.AutoField( primary_key=True,verbose_name ='ID')
+    firstname = models.CharField(max_length=200, validators=[validate_password_model])
+    lastname = models.CharField(max_length=200,validators=[validate_password_model])
+    email = models.CharField(max_length=254,unique=True,validators=[validators.EmailValidator(),validate_mail] )
+    password = models.CharField(max_length=250,validators=[validate_password_model])
+    
+    
+class Login_table(models.Model):
+    id = models.AutoField(primary_key=True, verbose_name ='ID')
+    username = models.CharField(max_length=200, unique=True, validators=[validate_username_model])
+    password = models.CharField(max_length=250 , validators=[validate_password_model])
+ 

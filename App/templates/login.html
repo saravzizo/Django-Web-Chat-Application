@@ -12,12 +12,12 @@
     <div class="bg-dark d-flex justify-content-end p-3">
         <a class="btn btn-sm btn-outline-danger text-decoration-none " href="/">Home</a>
         <span class="flex-grow-1"></span>
-        <a class="btn btn-sm btn-outline-danger text-decoration-none mx-2" href="/register">Register</a>
-        <a class="btn btn-sm btn-outline-danger text-decoration-none " href="/login">Login</a>
+        <a class="btn btn-sm btn-outline-danger text-decoration-none" href="/register">Register</a>
+       
     </div>
     {% block content %}
 
-    <div class="shadow-lg m-5 bg-light rounded col-md-5 col-lg-4 col-xl-4 col-sm-4">
+    <div class="shadow-lg m-5 bg-light rounded col-md-5 col-lg-4 col-xl-3 col-sm-4">
         <form class="d-flex flex-column align-items-center px-2" action="" method="POST">
             {% csrf_token %}
             <div class="w-75">
