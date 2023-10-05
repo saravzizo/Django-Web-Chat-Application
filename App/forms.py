@@ -10,7 +10,7 @@ class Login_Form_Model(ModelForm):
         model = Login_table       
         fields =["username", "password"]
         widgets = {
-            'username': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
+            'username': forms.TextInput(attrs={'class': 'form-control form-control-sm','placeholder':'Saravanan_02'}),
             'password': forms.PasswordInput(attrs={'class': 'form-control form-control-sm'}),
         }
     def clean(self):
@@ -21,19 +21,29 @@ class Login_Form_Model(ModelForm):
     
 
 class Register_Form_Model(ModelForm):
+    Confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control form-control-sm' ,'id':'Confirm-password-field'}))
+
     class Meta:
         model = Register_table       
         fields =["firstname", "lastname","email","password"]
         widgets = {
-            'firstname': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
-            'lastname': forms.TextInput(attrs={'class': 'form-control form-control-sm'}),
-            'email': forms.EmailInput(attrs={'class': 'form-control form-control-sm'}),
-            'password': forms.PasswordInput(attrs={'class': 'form-control form-control-sm'}),
+            'firstname': forms.TextInput(attrs={'class': 'form-control form-control-sm','placeholder':'Steve'}),
+            'lastname': forms.TextInput(attrs={'class': 'form-control form-control-sm','placeholder':'Rogers'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control form-control-sm','placeholder':'Steve@gmail.com'}),
+            'password': forms.PasswordInput(attrs={'class': 'form-control form-control-sm ', 'id':'password-field'}),
         }
+        
     def clean(self):
-        super(Register_Form_Model, self).clean()
+        cleaned_data = super().clean()
         firstname = self.cleaned_data.get('firstname')
         lastname = self.cleaned_data.get('lastname')
         email = self.cleaned_data.get('email')
         password = self.cleaned_data.get('password')
+        Confirm_password = self.cleaned_data.get("Confirm_password")
+
+        if password != Confirm_password:
+            self.add_error('Confirm_password', "Passwords do not match")
+            # del self.cleaned_data['password']
+
+
         return self.cleaned_data

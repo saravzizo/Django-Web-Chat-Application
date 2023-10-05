@@ -37,10 +37,12 @@ def Register(request):
             success= True
             return render(request, "register.html",{"success":success} )
         else:
+            context['form']=form
             return render(request, 'register.html',context)
        
     else:
         form = Register_Form_Model(None)
+        context['form']=form
         return render(request, 'register.html',context)
 
 
