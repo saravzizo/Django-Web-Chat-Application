@@ -2,7 +2,7 @@ from django.contrib import admin
 from .models import *
 
 class Login_class (admin.ModelAdmin):
-    list_display = ("username","password")
+    list_display = ("email","password")
 admin.site.register(Login_table,Login_class,)
 
 

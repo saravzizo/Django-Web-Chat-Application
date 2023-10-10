@@ -22,6 +22,15 @@
             {% csrf_token %}
             <div class="w-75">
                 <h1 class="h4 my-4 justify-content-center d-flex">Login Page</h1>
+                
+                {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-danger">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                {% endif %}
+
                 {% for field in form %}
                 <p class="h6">{{ field.label }}:</p>
                 {{ field }}

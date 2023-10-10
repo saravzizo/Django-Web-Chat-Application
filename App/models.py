@@ -33,6 +33,6 @@ class Register_table(models.Model):
     
 class Login_table(models.Model):
     id = models.AutoField(primary_key=True, verbose_name ='ID')
-    username = models.CharField(max_length=200, unique=True, validators=[RegexValidator("[A-Z]{1}[a-z_]{1,20}[0-9]{2,10}", message='Enter a correct username')])
+    email = models.CharField(max_length=200, validators=[validate_mail])
     password = models.CharField(max_length=250 , validators=[validate_password_model])
  

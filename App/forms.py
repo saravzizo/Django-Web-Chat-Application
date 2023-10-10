@@ -2,20 +2,20 @@ from urllib import request
 from django.forms import ModelForm, ValidationError
 from django import forms, template
 from django.http import HttpResponse
-from .models import Login_table, Register_table
+from .models import  Login_table, Register_table
 from django.db import models
 
-class Login_Form_Model(ModelForm):
+class Login_Form_Model(ModelForm):  
     class Meta:
         model = Login_table       
-        fields =["username", "password"]
+        fields =["email", "password"]
         widgets = {
-            'username': forms.TextInput(attrs={'class': 'form-control form-control-sm','placeholder':'Saravanan_02'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control form-control-sm','placeholder':'steve@gmail.com'}),
             'password': forms.PasswordInput(attrs={'class': 'form-control form-control-sm'}),
         }
     def clean(self):
         super(Login_Form_Model, self).clean()
-        username = self.cleaned_data.get('username')
+        email = self.cleaned_data.get('email')
         password = self.cleaned_data.get('password')
         return self.cleaned_data
     
@@ -42,7 +42,7 @@ class Register_Form_Model(ModelForm):
         Confirm_password = self.cleaned_data.get("Confirm_password")
 
         if password != Confirm_password:
-            self.add_error('Confirm_password', "Passwords do not match")
+            self.add_error('Confirm_password', "Passwords doesn't not match")
             # del self.cleaned_data['password']
 
 
