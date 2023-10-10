@@ -26,7 +26,7 @@ def validate_mail(value):
 class Register_table(models.Model):
     id = models.AutoField( primary_key=True,verbose_name ='ID')
     firstname = models.CharField(max_length=200,  validators=[validate_password_model,RegexValidator("^[a-zA-Z]*$", message='Only alphabets are allowed')])
-    lastname = models.CharField(max_length=200,validators=[validate_password_model,RegexValidator("^[a-zA-Z]*$", message='Only alphabets are allowed')])
+    lastname = models.CharField(max_length=200,validators=[RegexValidator("^[a-zA-Z]*$", message='Only alphabets are allowed')])
     email = models.CharField(max_length=254,unique=True,validators=[validators.EmailValidator(),validate_mail] )
     password = models.CharField(max_length=250,validators=[validate_password_model])
     

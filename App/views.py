@@ -9,6 +9,7 @@ from .import views
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.hashers import check_password
 from django.core.exceptions import ObjectDoesNotExist
+from django.contrib.auth import logout
 
 
 def Home(request):
@@ -52,7 +53,8 @@ def Login(request):
         try:
             user = Register_table.objects.get(email=email_from)
             if (user.password == pass_from):
-                return render(request, "success.html")
+                request.session['firstname'] = user.firstname  # Store the first name in session
+                return redirect('success')
             else:
                 form.add_error('password', "Incorrect password")
                 return render(request, "login.html", context)
@@ -65,11 +67,15 @@ def Login(request):
 
 
 def view_data(request):
-    # mydata = Login_table.objects.values()[Login_table.objects.count()-1]
-    mydata = "username"
+    firstname = request.session.get('firstname', 'Guest') 
     template = loader.get_template('success.html')
     context = {
-        'var1': mydata
+        'var1': firstname
     }
 
     return HttpResponse(template.render(context, request))
+
+
+def Logout(request):
+    logout(request)
+    return redirect('Home')

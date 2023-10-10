@@ -1,0 +1,19 @@
+.btn-success,.bg
+{
+    background-color: #127164;
+}
+.btn-outline-danger {
+    background-color: transparent;
+    border-color:white;
+    color: #fff;
+}
+
+.btn-outline-danger:hover {
+    color: #fff;
+    background-color: #127164;
+    border-color: #127164;
+}
+.form-control
+{
+    border: 1px groove #127164;
+}
