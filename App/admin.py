@@ -7,7 +7,7 @@ admin.site.register(Login_table,Login_class,)
 
 
 class Register_class (admin.ModelAdmin):
-    list_display = ("firstname","lastname","email","password")
+    list_display = ("firstname","lastname","email","password","username")
 
 admin.site.register(Register_table,Register_class)
 # Register your models here.

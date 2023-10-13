@@ -29,10 +29,15 @@ class Register_table(models.Model):
     lastname = models.CharField(max_length=200,validators=[RegexValidator("^[a-zA-Z]*$", message='Only alphabets are allowed')])
     email = models.CharField(max_length=254,unique=True,validators=[validators.EmailValidator(),validate_mail] )
     password = models.CharField(max_length=250,validators=[validate_password_model])
-    
+    username = models.CharField(max_length=400, blank=True)  # New field to store the full name
+
+    def save(self, *args, **kwargs):
+        self.username = self.firstname + "_" + self.lastname  # Concatenate firstname and lastname
+        super(Register_table, self).save(*args, **kwargs)  # Call the "real" save() method
+
     
 class Login_table(models.Model):
     id = models.AutoField(primary_key=True, verbose_name ='ID')
     email = models.CharField(max_length=200, validators=[validate_mail])
     password = models.CharField(max_length=250 , validators=[validate_password_model])
- 
+    

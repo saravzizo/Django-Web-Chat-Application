@@ -1,0 +1,6 @@
+{% extends 'login.html' %}
+{%block title%}Chat-App{% endblock %}
+{% block nav %}
+<a class="btn btn-sm btn-outline-danger text-decoration-none p-1" href="{% url 'logout' %}">Logout</a>
+{% endblock %}
+{% block content %}<p>Message Here</p> {% endblock %}

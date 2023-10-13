@@ -14,8 +14,9 @@
     <div class="nav-bg d-flex justify-content-end p-3">
         <a class="btn btn-sm btn-outline-danger text-decoration-none " href="/">Home</a>
         <span class="flex-grow-1"></span>
+        {% block nav %}
         <a class="btn btn-sm btn-outline-danger text-decoration-none" href="/register">Register</a>
-       
+        {% endblock %}
     </div>
     {% block content %}
 
@@ -40,10 +41,11 @@
             </div>
         </form>
     </div>
-
+    
     {% load static %}
     <img src="{% static '/login-img.png' %}" class=" d-none d-lg-block img-fluid" style="float: right;" alt="Responsive image">
     </div>
+    {% endblock %}
     <div class="nav-bg p-2 fixed-bottom ">
         <!-- <a class="btn btn-sm btn-outline-danger text-decoration-none " href="/">Home</a> -->
      <p class="text-light text-center m-0">Contact @Noordeen</p>
@@ -60,7 +62,7 @@
         }
        
     </style>
-    {% endblock %}
+    
 </body>
 
 </html>

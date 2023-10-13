@@ -7,8 +7,7 @@
     border-color:white;
     color: #fff;
 }
-
-.btn-outline-danger:hover {
+.btn-outline-danger:hover{
     color: #fff;
     background-color: #127164;
     border-color: #127164;
