@@ -3,4 +3,11 @@
 {% block nav %}
 <a class="btn btn-sm btn-outline-danger text-decoration-none p-1" href="{% url 'logout' %}">Logout</a>
 {% endblock %}
-{% block content %}<p>Message Here</p> {% endblock %}
+
+{% block content %}
+    <div class="d-flex mb-4 justify-content-evenly align-items-center">
+        <div class=" d-flex justify-content-center shadow-lg m-5 bg-light rounded col-8 col-md-5 col-lg-4 col-xl-3 col-sm-8">
+            <p class="h5 p-4">{{username}}</p>
+        </div>
+    </div>
+{% endblock %}
