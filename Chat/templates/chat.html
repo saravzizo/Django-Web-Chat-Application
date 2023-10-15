@@ -6,8 +6,15 @@
 
 {% block content %}
     <div class="d-flex mb-4 justify-content-evenly align-items-center">
-        <div class=" d-flex justify-content-center shadow-lg m-5 bg-light rounded col-8 col-md-5 col-lg-4 col-xl-3 col-sm-8">
-            <p class="h5 p-4">{{username}}</p>
+        <div class=" shadow-lg m-5 bg-light rounded col-8 col-md-7 col-lg-5 col-xl-4 col-sm-8">
+           <div class="d-flex flex-row justify-content-center align-items-center bg-secondary">
+            <i class="py-4 fa-2x bi bi-person-square"></i>
+            <p class="h4 px-2 m-0">{{username}}</p>
+           </div>
+           <div>
+            <p></p>
+            
+           </div>
         </div>
     </div>
 {% endblock %}

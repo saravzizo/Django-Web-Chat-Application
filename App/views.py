@@ -77,7 +77,7 @@ def Login(request):
 def view_data(request):
     firstname = request.session.get('firstname', 'Guest')
     template = loader.get_template('success.html')
-    username = Register_table.objects.values_list(
+    username = Add_chat.objects.values_list(
         'username', flat=True).order_by('-id')
     top_three_username = Add_chat.objects.values_list(
         'username', flat=True).order_by('-id')[:3]

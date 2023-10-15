@@ -27,19 +27,26 @@
         <span class="h6">Hi<span class="text-light"> {{var1}}</span></span><br>
 
         <div id="chatList" style="display: none;"
-            class="shadow-lg m-3 bg-light rounded col-8 col-md-7 col-lg-5 col-xl-5 col-sm-8">
+            class="shadow-lg m-3 bg-light rounded col-8 col-md-7 col-lg-5 col-xl-4 col-sm-8">
             <form id="chatid" class="d-flex flex-column align-items-center px-2" action="" method="POST">
                 {% csrf_token %}
-                <div class="w-75">
+                <div class="w-75">    
                     <h1 class="h4 my-4 justify-content-center d-flex">Chat List</h1>
+                
                     {% for email in username %}
-                    <p>{{ email }}</p>
+                    <div class="d-flex align-items-center justify-content-center ">
+                        <p class=" h6">
+                        <a href="{% url 'chat' username=email %}" style="text-decoration: none;color:#127164;" class=" px-3 m-2" type="submit">
+                            <strong>{{ email }}</strong>
+                        </a>
+                        </p>
+                    </div>
                     {% endfor %}
                 </div>
             </form>
         </div>
-
-        <div id="addChatForm" class="shadow-lg m-3 bg-light rounded col-8 col-md-7 col-lg-5 col-xl-5 col-sm-8">
+        
+        <div id="addChatForm" class="shadow-lg m-3 bg-light rounded col-8 col-md-7 col-lg-5 col-xl-4 col-sm-8">
             <form id="chatform" class="d-flex flex-column align-items-center px-2" action="" method="POST">
                 {% csrf_token %}
                 <div class="w-75">
@@ -79,7 +86,7 @@
         <div class="d-flex flex-sm-row justify-content-evenly flex-column align-items-center mb-5">
             {% for email in top_three_username %}
             <div
-                class="justify-content-center align-items-center d-flex flex-column shadow-lg bg-light rounded col-7 col-md-3 col-lg-3 col-xl-3 col-sm-3 mb-2">
+                class="justify-content-center align-items-center d-flex flex-column shadow-lg bg-light rounded col-7 col-md-3 col-lg-3 col-xl-2 col-sm-3 mb-2">
                 <p class="h6 mt-3 mb-2 ">{{email}}</p>
                 <a href="{% url 'chat' username=email %}" class="btn btn-success btn-sm px-3 mt-2 mb-3" type="submit">chat</a>
             </div>

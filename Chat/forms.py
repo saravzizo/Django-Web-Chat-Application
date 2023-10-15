@@ -10,7 +10,7 @@ class Add_chat_model(ModelForm):
         model = Add_chat
         fields = ["username"]
         widgets = {
-            'username': forms.TextInput(attrs={'class': 'form-control form-control-sm', 'placeholder': 'steve Rogers'}),
+            'username': forms.TextInput(attrs={'class': 'form-control form-control-sm', 'placeholder': 'Steve_Rogers'}),
 
         }
 
