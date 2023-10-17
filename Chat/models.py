@@ -17,5 +17,3 @@ def validate_mail(value):
     
 class Add_chat(models.Model):
     username = models.CharField(max_length=200,unique=True)
-    
- 

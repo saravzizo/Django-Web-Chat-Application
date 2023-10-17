@@ -5,16 +5,113 @@
 {% endblock %}
 
 {% block content %}
-    <div class="d-flex mb-4 justify-content-evenly align-items-center">
-        <div class=" shadow-lg m-5 bg-light rounded col-8 col-md-7 col-lg-5 col-xl-4 col-sm-8">
-           <div class="d-flex flex-row justify-content-center align-items-center bg-secondary">
-            <i class="py-4 fa-2x bi bi-person-square"></i>
+<div class="d-flex mb-4 justify-content-evenly align-items-center">
+    <div class=" shadow-lg m-5 bg-light rounded col-8 col-md-7 col-lg-5 col-xl-4 col-sm-8">
+        <div class="d-flex flex-row justify-content-center align-items-center bg-secondary">
+            <i class="py-3 fa-2x bi bi-person-square"></i>
             <p class="h4 px-2 m-0">{{username}}</p>
-           </div>
-           <div>
-            <p></p>
-            
-           </div>
         </div>
+
+        <div class="col">
+            <!-- Chat box -->
+            <div class="card">
+                <div class="card-body ">
+                    <div id="chatBox" class="shadow-lg" style="height: 300px; overflow-y: scroll;">
+                        <!-- Chat messages will go here -->
+
+                        <div class=" mx-2 mt-2 rounded bg-secondary "
+                            style="width: fit-content;max-width: 65%;background-color: #37bba9;">
+                            <div class="m-0 px-2 pt-1">
+                                <p class="m-0 h6">{{username}}</p>
+                                <span class=""><small>Hi how are you</small></span>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+                <div class=" ">
+                    <!-- Message input -->
+                    <form class="card-footer d-flex flex-row" method="post" action="">
+                        {% csrf_token %}
+                        <input type="text" id="messageInput" class="form-control form-control-sm mx-2"
+                            placeholder="Type a message">
+                        <button id="sendButton" type="submit" class="btn btn-success btn-sm mx-2">Send</button>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+
+
     </div>
+</div>
+
+{{ username|json_script:"json-username" }}
+
+<script>
+    const userName = JSON.parse(document.getElementById('json-username').textContent);
+
+    const chatSocket = new WebSocket(
+        'ws://'
+        + window.location.host
+        + '/ws/'
+        + userName
+        + '/'
+    );
+
+    chatSocket.onopen = function (e) {
+        console.log("Connection established");
+    };
+
+    chatSocket.onerror = function (e) {
+        console.error('WebSocket error:', e);
+    };
+
+    chatSocket.onclose = function (e) {
+        if (e.wasClean) {
+            console.log('WebSocket closed cleanly, code: ' + e.code + ', reason: ' + e.reason);
+        } else {
+            console.error('WebSocket connection abruptly closed.');
+        }
+    };
+
+
+    chatSocket.onmessage = function(e)
+    {
+        const data = JSON.parse(event.data);
+        const message = data.message;
+
+        // Append the message to the chat box
+        const chatBox = document.querySelector('#chatBox');
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'mx-2 mt-2 rounded bg-secondary';
+        messageDiv.style.width = 'fit-content';
+    
+        messageDiv.innerHTML = `<div class="m-0 px-2 pt-1"><p class="m-0 h6">{{ username }}</p><span class=""><small>${message}</small></span></div>`;
+        chatBox.appendChild(messageDiv);
+
+    };
+
+
+
+    var messageInput = document.getElementById('messageInput');
+    var sendButton = document.getElementById('sendButton');
+    // Get the form element
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const message = messageInput.value;
+        chatSocket.send(JSON.stringify({
+            'message': message
+        }));
+        messageInput.value = '';
+    });
+
+
+</script>
+
+
 {% endblock %}
