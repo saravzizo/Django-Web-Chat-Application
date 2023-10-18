@@ -1,8 +1,6 @@
 
 from django.test import TestCase, Client
 from django.urls import reverse
-from App.models import Register_table
-from App.views import Register
 
 
 class HomeViewTestCase(TestCase):
