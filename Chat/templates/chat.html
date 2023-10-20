@@ -16,18 +16,25 @@
             <!-- Chat box -->
             <div class="card">
                 <div class="card-body ">
-                    <div id="chatBox" class="shadow-lg" style="height: 300px; overflow-y: scroll;">
+                    <div id="chatBox" class="shadow-lg d-flex flex-column" style="height: 300px; overflow-y: scroll;">
                         <!-- Chat messages will go here -->
 
-                        <div class=" mx-2 mt-2 rounded bg-secondary "
-                            style="width: fit-content;max-width: 65%;background-color: #37bba9;">
+                        {% for chat in chat_history %}
+                        
+                        <div class=" mx-2 my-2 rounded "style="width: fit-content;max-width: 65%;background-color: #b2bbba;">
                             <div class="m-0 px-2 pt-1">
-                                <p class="m-0 h6">{{loggedinUser}} </p>
-                                <span class=""><small>Hi how are you</small></span>
+                                
+                               
+                                <p class="mb-2 h6" style="font-size:smaller;">{{chat.user.username}}</p>
+                                
+                                <span class="my-2" style="font-size:small;">{{ chat.message }}</span>
+                            </div>
+                            <div >
+                                <p class="text-muted m-0 mx-1" style="font-size:x-small;float: right;">{{chat.date | time}}</p>
                             </div>
                         </div>
-
-
+                       
+                        {% endfor %}
 
 
                     </div>
@@ -55,14 +62,20 @@
 {{loggedinUser|json_script:"loggedin-user" }}
 {{common_room_name|json_script:"common-room-name" }}
 <script>
+
+    function scrollToBottom() {
+        var chatBox = document.getElementById('chatBox');
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
     const userName = JSON.parse(document.getElementById('json-username').textContent);
     const loggedInUser = JSON.parse(document.getElementById('loggedin-user').textContent);
     const commonRoomName = JSON.parse(document.getElementById('common-room-name').textContent);
     const chatSocket = new WebSocket(
         'ws://'
         + window.location.host
-        + '/ws/'
-        + commonRoomName
+        + '/ws/chat_'
+        + userName
         + '/'
 
     );
@@ -89,19 +102,32 @@
 
         const chatBox = document.querySelector('#chatBox');
         const messageDiv = document.createElement('div');
-        messageDiv.className = 'mx-2 mt-2 rounded bg-secondary';
+       
+        messageDiv.className = ' mx-2 my-2 rounded';
         messageDiv.style.width = 'fit-content';
+        messageDiv.style.backgroundColor = '#b2bbba';
+        messageDiv.style.float = 'right';
+        messageDiv.style.maxWidth = '65%';
 
         if (data.message) {
-            messageDiv.innerHTML = ('<div class="m-0 px-2 pt-1">'
-                + '<p class="m-0 h6">'
-                + data.logged
-                + '</p><span class="">'
-                + '<small>'
-                + data.message
-                + '</small></span></div>');
+            messageDiv.innerHTML = (
+              
+                '<div class="m-0 px-2 pt-1">'
+                +'<p class="mb-2 h6" style="font-size:smaller;">'
+                +data.logged
+                +'</p>'
+                +'<span class="my-2" style="font-size:small;">'
+                +data.message
+                +'</span></div><div >'
+                            
+                +'<p class="text-muted m-0 mx-1" style="font-size:x-small;float: right;">'
+                +'{{current_time}}'
+                +'</p></div></div>'
+                
+                );
 
             chatBox.appendChild(messageDiv);
+            scrollToBottom(); 
 
         } else {
             alert('The message was empty!')
@@ -112,8 +138,6 @@
 
 
     };
-
-
 
     var messageInput = document.getElementById('messageInput');
     var sendButton = document.getElementById('sendButton');
@@ -126,10 +150,17 @@
         chatSocket.send(JSON.stringify({
             'message': message,
             'logged': loggedInUser,
+            'username':userName,
+            
+
         }));
         messageInput.value = '';
+        
     });
 
+
+    
+    scrollToBottom(); 
 
 </script>
 
