@@ -25,6 +25,6 @@ urlpatterns = [
     path('success/', views.view_data, name="success"),
     path('register/', views.Register, name="register"),
     path('logout/', views.Logout, name='logout'),
-    path('chat/', include('Chat.urls') , name='chat'),
+    path('', include('Chat.urls') , name='chat'),
 
 ]

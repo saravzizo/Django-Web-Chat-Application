@@ -10,15 +10,7 @@ from channels.security.websocket import AllowedHostsOriginValidator
 
 from Chat.consumers import ChatConsumer
 
-
-# application = ProtocolTypeRouter({
-#     "websocket": URLRouter([
-#         path("ws/chat/<str:username>/", consumers.ChatConsumer.as_asgi()),
-#     ]),
-# })
-
-
 websocket_urlpatterns = [
-    
-    path("ws/<str:username>/", ChatConsumer.as_asgi()),
+
+    path("ws/chat_<str:username>/", ChatConsumer.as_asgi()),
 ]

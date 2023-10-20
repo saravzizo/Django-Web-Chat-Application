@@ -6,9 +6,18 @@ import json
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
-        self.room_name = self.scope['url_route']['kwargs']['username']
-        self.room_group_name = 'chat_%s' % self.room_name
-        # Join the room
+        # room_name = 'chat_'+'username'
+        # self.room_name = self.scope['url_route']['kwargs']['username']
+        # # self.room_name = 'common_room'
+        # self.room_group_name = 'chat_%s' % self.room_name
+        # # Join the room
+
+        self.user = self.scope['user']  # Get the authenticated user
+        self.other_user = self.scope['url_route']['kwargs']['username']  # The other user to chat with
+        self.room_name = get_common_room_name(self.user.username, self.other_user)
+        self.room_group_name = f'chat_{self.room_name}'
+
+
         await self.channel_layer.group_add(
             self.room_group_name,
             self.channel_name
@@ -30,21 +39,33 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data):
         text_data_json = json.loads(text_data)
         message = text_data_json['message']
+        loggedinUser = self.scope['session'].get('username')
         await self.channel_layer.group_send(
             self.room_group_name,
             {
                 'type': 'chat_message',
-                'message': message
+                'message': message,
+                'logged':loggedinUser
             }
         )
     
     # Receive message from room group
     async def chat_message(self, event):
         message = event['message']
+        loggedinUser = event['logged']
         print("message",message)
+        print(loggedinUser)
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
-            'message': message
+            'message': message,
+            'logged':loggedinUser
         }))
 
     
+
+def get_common_room_name( username1, username2):
+        # Create a unique room name based on the usernames
+        if username1 < username2:
+            return f"chat_{username1}_{username2}"
+        else:
+            return f"chat_{username2}_{username1}"
