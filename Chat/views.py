@@ -1,5 +1,5 @@
 from datetime import datetime
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 from Chat.forms import Add_chat_model, Get_message_model
 from Chat.models import Add_chat, Messages
 from Chat.consumers import get_common_room_name
@@ -7,8 +7,12 @@ from Chat.consumers import get_common_room_name
 
 def chat_view(request,username):
 
-    
+     
     loggedinUser = request.session.get('username')
+    
+    if loggedinUser is None:
+        return redirect('login')  
+    
     common_room_name = get_common_room_name(loggedinUser, username)
     print("common_room_name",common_room_name)
     Message_field = Get_message_model(request.POST or None)
