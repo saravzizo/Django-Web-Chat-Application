@@ -1,6 +1,7 @@
 
 from django.contrib import messages
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
 
 from Chat.forms import Add_chat_model
 from Chat.models import Add_chat
@@ -46,7 +47,7 @@ global var1
 
 
 def Login(request):
-    if 'firstname' in request.session:
+    if 'username' in request.session:
         return redirect('success')
 
     context = {}
@@ -61,7 +62,7 @@ def Login(request):
             user = Register_table.objects.get(email=email_from)
             if (user.password == pass_from):
                 # Store the first name in session
-                request.session['firstname'] = user.firstname
+                request.session['username'] = user.username
                 return redirect('success')
             else:
                 form.add_error('password', "Incorrect password")
@@ -74,17 +75,23 @@ def Login(request):
         return render(request, "login.html", context)
 
 
+
 def view_data(request):
-    firstname = request.session.get('firstname', 'Guest')
+   
+    loggedinUser = request.session.get('username')
+    if loggedinUser is None:
+        return redirect('login')
+
     template = loader.get_template('success.html')
-    username = Add_chat.objects.values_list(
+    username = Add_chat.objects.filter(user__username=loggedinUser).values_list(
         'username', flat=True).order_by('-id')
-    top_three_username = Add_chat.objects.values_list(
-        'username', flat=True).order_by('-id')[:3]
+    top_three_username = Add_chat.objects.filter(
+        user__username=loggedinUser).values_list('username', flat=True).order_by('-id')[:3]
 
     form = Add_chat_model(request.POST or None)
     context = {
-        'var1': firstname,
+
+        'var1': loggedinUser,
         'username': username,
         'chat_form': form,
         'top_three_username': top_three_username,
@@ -92,22 +99,39 @@ def view_data(request):
     if request.method == 'POST':
 
         # if details.is_valid():
+        user = Register_table.objects.get(username=loggedinUser)
+        user_id = user.id
+        print(user_id)
+
         full = request.POST["username"]
         details = Add_chat_model(request.POST or None)
+
+        bool = Add_chat.objects.filter(username=full, user=user_id)
+        print(bool)
+
         try:
             user_in_register = Register_table.objects.filter(
                 username=full).first()
-            user_in_add_chat = Add_chat.objects.filter(username=full).first()
 
             if user_in_register:
-                if user_in_add_chat:
+                if full == loggedinUser:
+                    form.add_error('username', 'You cannot chat with yourself')
+                    return render(request, "success.html", context)
+
+                if bool:
                     form.add_error('username', 'Username already exists')
                     return render(request, "success.html", context)
-                else:
-                    details.save(commit=False)
-                    details.save()
-                    context['success'] = True
-                return render(request, "success.html", context)
+
+                if not bool:
+                    if details.is_valid():
+                        data = details.save(commit=False)
+                        data.user = user
+                        data.save()
+                        context['success'] = True
+                        return render(request, "success.html", context)
+                    else:
+                        print(details.errors)
+                        return render(request, "success.html", context)
 
             else:
                 form.add_error(
@@ -115,7 +139,6 @@ def view_data(request):
                 return render(request, "success.html", context)
 
         except Register_table.DoesNotExist:
-            print("none")
             form.add_error('username', "User not found")
             return render(request, "success.html", context)
 
@@ -125,4 +148,4 @@ def view_data(request):
 
 def Logout(request):
     logout(request)
-    return redirect('Home')
+    return redirect('login')

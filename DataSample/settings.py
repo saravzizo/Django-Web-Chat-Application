@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-&etm7@)5lh5gi*9(@3hlhtpua-_z=i6zgyjg-64p1svp$3#r0y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.36:8000','192.168.1.36']
+ALLOWED_HOSTS = [ ]
 
 STATIC_URL = "static/"
 
@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'App', 
     'Chat',
+    'channels',
+    'channels_redis',
 ]
 
 MIDDLEWARE = [
@@ -71,7 +73,13 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'DataSample.wsgi.application'
+ASGI_APPLICATION = 'DataSample.routing.application'
 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer',
+    },
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
@@ -108,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Kolkata'
 
 USE_I18N = True
 
