@@ -30,15 +30,14 @@
                             {% for chat in chat_history %}
                             
                             <div class=" chat-message {% if chat.user.username == loggedinUser %}from-loggedin-user{% endif %}">
-                                <div class=" mx-2 my-1 rounded d-flex flex-column"style="width: fit-content;max-width: 65%;background-color:#d2dad9;
-                                {% if chat.user.username == loggedinUser %}background-color:#b9e5df{% endif %}">
-                                    <div class="m-0 px-2 pt-1">
-                                        <p class="mb-2 h6 " style="font-size:smaller;">{{chat.user.username}}</p>
-                                        <span class="" style="font-size:small;">{{ chat.message }}</span>
+                                <div class=" mx-2 my-1 rounded d-flex flex-column"style="width: fit-content;max-width: 65%;background-color:#d2dad9;{% if chat.user.username == loggedinUser %}background-color:#b9e5df{% endif %}">
+                                    <div class="m-0 pt-1" style="border-bottom:1px solid black;">
+                                        <p class="d-flex flex-column m-0 px-2 my-0 {% if chat.user.username == loggedinUser %}align-items-end{% else %}align-items-start {% endif %}" style="font-size:smaller; ">{{chat.user.username}}</p>
                                     </div>
+                                    <span class="mx-2 mt-2" style="font-size:small;">{{ chat.message }}</span>
+                               
                                     <div >
-                                        <p class="text-muted mx-2 my-2 mb-1" style="font-size:x-small;float: right;
-                                        {% if chat.user.username == loggedinUser %}float:left{% endif %}">{{chat.date | time}}
+                                        <p class=" d-flex flex-column text-muted mx-2 my-2 mb-1 {% if chat.user.username == loggedinUser %}align-items-start{% else %}align-items-end {% endif %}" style="font-size:x-small;">{{chat.date | time}}
                                         </p>
                                     </div>
                                 </div>
@@ -106,38 +105,57 @@
 
         chatSocket.onmessage = function (e) {
             const data = JSON.parse(event.data);
-
+            const logged = data.logged;
             const chatBox = document.querySelector('#chatBox');
             const messageDiv = document.createElement('div');
-        
-            messageDiv.className = 'from-loggedin-user';
-           
+            messageDiv.id = 'messageDiv';
+            if(data.logged == loggedInUser){
+                messageDiv.className = ' from-loggedin-user ';
+                
 
+            }
+            else{
+                messageDiv.className = ' chat-message ';
+               
+            }
+            // messageDiv.childNodes[1].backgroundColor
             if (data.message) {
                 messageDiv.innerHTML = (
 
-                    '<div class=" mx-2 my-1 rounded d-flex flex-column"style="width: fit-content;max-width: 65%;background-color:#b9e5df">'           
-                   
-                    +'<div class="m-0 px-2 pt-1">'
-                    +'<p class="mb-2 h6" style="font-size:smaller;">'
+                    '<div class=" mx-2 my-1 rounded d-flex flex-column"style="width: fit-content;max-width: 65%;">'                   
+                    +'<div class="m-0 pt-1"  style="border-bottom:1px solid black;">'
+                    +'<p style="font-size:smaller;">'
                     +data.logged
-                    +'</p>'
-                    +'<span class="" style="font-size:small;">'
+                    +'</p></div>'
+                    +'<span class="mx-2 mt-2" style="font-size:small;">'
                     +data.message
                     +'</span>'
-                    +'</div>' 
-
-                    +'<div><p class="text-muted mx-2 my-2 mb-1" style="font-size:x-small;float: left;">'
+                
+                    +'<div><p style="font-size:x-small;">'
                     +'{{current_time}}'
                     +'</p></div>'
                     
                     +'</div>'
                     
-                    );
+                );  
+                    
+                if(data.logged == loggedInUser){
+                    messageDiv.children[0].style.backgroundColor = "#b9e5df";
+                    messageDiv.childNodes[0].childNodes[0].childNodes[0].className = "d-flex flex-column m-0 px-2 my-0  align-items-end";
+                    messageDiv.childNodes[0].childNodes[2].childNodes[0].className = " d-flex flex-column text-muted mx-2 my-2 mb-1 align-items-start";
+                }
+                else{
+                    
+                    messageDiv.children[0].style.backgroundColor = "#d2dad9";
+                    messageDiv.childNodes[0].childNodes[0].childNodes[0].className = "d-flex flex-column m-0 px-2 my-0 align-items-start";
+                    messageDiv.childNodes[0].childNodes[2].childNodes[0].className = " d-flex flex-column text-muted mx-2 my-2 mb-1 align-items-end";
+   
+                }
 
                 chatBox.appendChild(messageDiv);
-                scrollToBottom(); 
-
+                
+                scrollToBottom();
+                
             } else {
                 alert('The message was empty!')
             }
@@ -179,6 +197,12 @@
             display: flex;
             flex-direction: column;
             align-items: flex-end;
+        }
+        .self-msg{
+            background-color: #b9e5df;
+        }
+        .other-msg{
+            background-color: #d2dad9;
         }
     </style>
 {% endblock %}
