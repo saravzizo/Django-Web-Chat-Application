@@ -30,7 +30,7 @@
                             {% for chat in chat_history %}
                             
                             <div class=" chat-message {% if chat.user.username == loggedinUser %}from-loggedin-user{% endif %}">
-                                <div class=" mx-2 my-1 rounded d-flex flex-column"style="width: fit-content;max-width: 65%;background-color:#d2dad9;{% if chat.user.username == loggedinUser %}background-color:#b9e5df{% endif %}">
+                                <div class=" mx-2 my-1 rounded d-flex flex-column"style="width: fit-content;max-width: 65%;background-color:#d1d0e8;{% if chat.user.username == loggedinUser %}background-color:#adaae4{% endif %}">
                                     <div class="m-0 pt-1" style="border-bottom:1px solid black;">
                                         <p class="d-flex flex-column m-0 px-2 my-0 {% if chat.user.username == loggedinUser %}align-items-end{% else %}align-items-start {% endif %}" style="font-size:smaller; ">{{chat.user.username}}</p>
                                     </div>
@@ -140,13 +140,13 @@
                 );  
                     
                 if(data.logged == loggedInUser){
-                    messageDiv.children[0].style.backgroundColor = "#b9e5df";
+                    messageDiv.children[0].style.backgroundColor = " #adaae4";
                     messageDiv.childNodes[0].childNodes[0].childNodes[0].className = "d-flex flex-column m-0 px-2 my-0  align-items-end";
                     messageDiv.childNodes[0].childNodes[2].childNodes[0].className = " d-flex flex-column text-muted mx-2 my-2 mb-1 align-items-start";
                 }
                 else{
                     
-                    messageDiv.children[0].style.backgroundColor = "#d2dad9";
+                    messageDiv.children[0].style.backgroundColor = "##d1d0e8";
                     messageDiv.childNodes[0].childNodes[0].childNodes[0].className = "d-flex flex-column m-0 px-2 my-0 align-items-start";
                     messageDiv.childNodes[0].childNodes[2].childNodes[0].className = " d-flex flex-column text-muted mx-2 my-2 mb-1 align-items-end";
    
