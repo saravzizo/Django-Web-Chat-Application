@@ -1,58 +1,109 @@
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        {%block title%}
-        <title>Home</title>
-        {% endblock %}
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        {% load static %}
-        <link rel="stylesheet" href="{% static '/index.css' %}">
-    </head>
 
-    <body class="bg">
-        {% block nav %}
-        <div class="nav-bg d-flex justify-content-start p-3">
-            <span class="flex-grow-1"></span>
-            
-            <a class="btn btn-sm btn-outline-danger text-decoration-none mx-2" href="/register">Register</a>
-            <a class="btn btn-sm btn-outline-danger text-decoration-none " href="/login">Login</a>
-        </div>
-        {% endblock %}
-        
-        {% block content %}
-        <p class=" h4 pt-5 text-center ">Welcome to ChatterNet - Unleash the Power of WebSockets</p> 
-        <div class=" d-flex flex-column flex-md-row align-items-center justify-content-evenly mt-5">
-            
-            <div class="p-5"> 
-            <p class="h5 mb-5">Join ChatterNet Today</p>
-            <p class="h6">Join the ChatterNet community and explore the power of WebSockets in real-time communication.</p>  
-            <p class="h6">Signing up is a breeze, and you can start chatting instantly. Connect like never before!</p> 
-            <p>Ready to experience the dynamic world of ChatterNet? </p>
-            <p>Get started now and discover the future of chat.</p> 
-            </div>
-            <div>
-                {% load static %}
-            <img src="{% static '/1.png' %}" class="img-fluid" style="float: right;width: 650px;" alt="Responsive image">
-
-            </div>
-        </div>
-        
-
-           
-            
-        {% endblock %}
-
-        {%block footer%}
-        <div class="nav-bg p-2 fixed-bottom ">
-        <p class="text-light m-0 text-center">Contact @Noordeen</p>
-        </div>
-        {%endblock%}
-    </body>
-
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
+    <title>ChatterNet | {%block title%}Home{% endblock %}</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static '/index.css' %}">
+</head>
+
+<body class="bg p-0 container-fluid" style="height: 100vh;">
+{% block nav %}
+    <div class="nav-bg d-flex justify-content-start p-3">
+        <span class="flex-grow-1"></span>
+
+        <a class="btn btn-sm btn-outline-danger text-decoration-none mx-2" href="/register">Register</a>
+        <a class="btn btn-sm btn-outline-danger text-decoration-none " href="/login">Login</a>
+    </div>
+{% endblock %}
+
+<div id="fulscreenDiv" >
+    {% block content %}
+        <p class=" h4 p-3 pt-5 pb-2 text-center ">Welcome to ChatterNet - The Ultimate Communication Application</p>
+        <div class=" d-flex flex-column flex-md-row align-items-center justify-content-evenly mt-5">
+            <div class="py-5 px-0 p-md-5  col-8 col-sm-6">
+                <p class="h5 mb-5">Join ChatterNet Today</p>
+
+                <p class="text-justify">The ChatterNet community and explore the power of WebSockets in real-time communication.</p> <br>
+                <p><a href="register" class="text-decoration-none">Signing up</a> is a breeze, and you can start chatting instantly. Connect like never before! Ready to experience the dynamic world of ChatterNet?</p>
+                <p>Get started now and discover the future of chat.</p>
+                
+            </div>
+            
+            <div class="col-6 col-sm-5">
+                {% load static %}
+                <img src="{% static '/1.png' %}" class="img-fluid d-none d-md-block " style="float: right;width: 900px;"
+                    alt="Responsive image">
+            </div>
+        </div>
+        
+{% endblock %}
+</div>
+
+{%block footer %}
+
+
+    <footer class=" nav-bg p-3 text-center footer " >
+        <div class=" text-light d-flex flex-column mt-0 pt-0 p-2 pb-0 p-md-0 m-md-0 m-2 flex-md-row align-items-center text-center text-md-start justify-content-evenly">
+
+            <div class="p-2 m-2 col-8 col-md-3 col-xxl-2">
+                <p class="h6">Contact Us</p>
+                <small>Have questions or need assistance? We're here to help. Reach out to my friend Noordeen <a href="mailto:rkonoordeen12@gmail.com">Here</a></small>
+                </p>
+            </div>
+
+            <div class="p-2 m-2 col-8 col-md-3 col-xxl-2">
+                <p class="h6">About ChatterNet</p>
+                    <small>At ChatterNet, we are dedicated to redefining the way people connect and communicate in the digital age.</small><br>
+                    <small>Learn more about ChatterNet and our mission on our <a href="about">About Us</a> page.</small>
+                </p>
+            </div>
+
+            
+            <div class="p-2 m-2 col-8 col-md-3 col-xxl-2">
+                <p class="h6">Follow Us</p>
+                <small>Stay updated with the latest news and features. Connect with us on 
+                    <a href="https://www.facebook.com/profile.php?id=100021272142243" target="_blank">Facebook</a>,
+                    <a href="https://twitter.com/Saravanan_002" target="_blank">Twitter</a>, and 
+                    <a href="https://www.linkedin.com/in/saravzizo/" target="_blank">LinkedIn</a>.</small>
+                </p>
+            </div>
+
+
+        </div>
+
+        <hr class="text-white" style="opacity: 0.5;height: 1px;">
+        <div class="d-flex flex-row justify-content-center py-2">
+            <a href="https://www.facebook.com/profile.php?id=100021272142243" target="_blank"><i class="fa fa-facebook btn  btn-primary  px-2 mx-1"></i></a>
+            <a href="https://github.com/saravzizo" target="_blank"><i class="fa fa-github btn  btn-light  px-2 mx-1"></i></a>
+            <a href="tel:8015196871" target="_blank"><i class="fa fa-phone btn  btn-success  px-2 mx-1" style="background-color: green;border-color: green;"></i></a>
+            <a href="https://www.linkedin.com/in/saravzizo/" target="_blank"><i class="fa fa-linkedin btn  btn-primary  px-2 mx-1" style="background-color: blue;border-color: blue;"></i></a>
+            <a href="https://www.instagram.com/_saravanan.s._/" target="_blank"><i class="fa fa-instagram btn  btn-danger  px-2 mx-1"></i></a>
+            <a href="https://twitter.com/Saravanan_002" target="_blank"><i class="fa fa-twitter btn  btn-primary  px-2 mx-1"></i></a>
+
+        </div>
+        <hr class="text-white" style="opacity:0.5;height: 1px;">
+        <div class="pt-3">
+            <span class="text-light">Copyright ©2023 ChatterNet.</span><br>
+            <span class="text-light text-muted">All rights reserved.</span>
+        </div>
+        
+
+    </footer>
+    
+
+
+
+{%endblock%}
+</body>
+
+
 </html>

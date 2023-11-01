@@ -1,8 +1,6 @@
 {% extends 'home.html'%}
 
-{%block title%}
-    <title>User Page</title>
-{% endblock %}
+{%block title%}User Page{% endblock %}
 
 {% block nav%}
     <div class="nav-bg d-flex justify-content-end p-3">
@@ -15,10 +13,10 @@
 {% endblock %}
    
 {%block content %}
+
     <div class="container m-auto mt-5 d-flex flex-column align-items-center justify-content-center">
         <span class="h6">Hi<span class="text-dark"> {{var1}} </span></span><br>
-        <div id="chatList" style="display: none;"
-            class="shadow-lg m-3 bg-light rounded col-8 col-md-7 col-lg-5 col-xl-4 col-sm-8">
+        <div id="chatList" style="display: none;" class="shadow-lg m-5 bg-light rounded col-8 col-md-7 col-lg-5 col-xl-4 col-sm-8">
             <form id="chatid" class="d-flex flex-column align-items-center px-2" action="" method="POST">
                 {% csrf_token %}
                 <div class="w-75">    
@@ -59,6 +57,7 @@
                 </div>
             </form>
         </div>
+    
 
         {% if success %}
         <script>

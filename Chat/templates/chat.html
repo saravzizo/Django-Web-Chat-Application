@@ -1,208 +1,259 @@
 {% extends 'home.html' %}
-{%block title%}
-    <title>Chat with {{username}}</title>
-{% endblock %}
+{%block title%}Chat with {{username}}{% endblock %}
 
 {% block nav %}
-    <div class="nav-bg d-flex justify-content-start p-3">
-        <a class="btn btn-sm btn-outline-danger text-decoration-none p-1 " href="/">Home</a>
-        <span class="flex-grow-1"></span>
-        <a class="btn btn-sm btn-outline-danger text-decoration-none p-1 mx-2" href="{% url 'success' %}">User Page</a>
-        <a class="btn btn-sm btn-outline-danger text-decoration-none p-1" href="{% url 'logout' %}">Logout</a>
-    </div>
+<div class="nav-bg d-flex justify-content-start p-3">
+    <a class="btn btn-sm btn-outline-danger text-decoration-none p-1 " href="/">Home</a>
+    <span class="flex-grow-1"></span>
+    <a class="btn btn-sm btn-outline-danger text-decoration-none p-1 mx-2" href="{% url 'success' %}">User Page</a>
+    <a class="btn btn-sm btn-outline-danger text-decoration-none p-1" href="{% url 'logout' %}">Logout</a>
+</div>
 {% endblock %}
 
 {% block content %}
-    <div class="d-flex mb-4 justify-content-evenly align-items-center">
-        <div class=" shadow-lg m-5 bg-light rounded col-8 col-md-7 col-lg-5 col-xl-4 col-sm-8">
-            <div class="d-flex flex-row justify-content-center align-items-center bg-secondary px-2 py-4 p-sm-0">
-                <i class="py-3 fa-2x bi bi-person-square d-sm-block d-none"></i>
+<div class="d-flex mb-4 justify-content-evenly align-items-center">
+    <div id="idForWidth" class=" shadow-lg m-5 bg-light rounded col-md-7 col-lg-6 col-xl-5 col-sm-8 col-xxl-4">
+
+        <div class=" d-flex flex-row justify-content-center align-items-center bg-secondary px-2 py-4 p-sm-0">
+            <span class="flex-grow-1"></span>
+
+            <div class="d-flex flex-row justify-content-center align-items-center">
+                <i class="py-3 fa-2x bi bi-person-square d-sm-block d-none px-3"></i>
                 <p class="h6 px-2 m-0">{{username}} </p>
             </div>
 
-            <div class="col">
-                <!-- Chat box -->
-                <div class="card">
-                    <div class="card-body ">
-                        <div id="chatBox" class= "d-flex flex-column shadow-lg " style="height: 300px; overflow-y: scroll;">
-                            <!-- Chat messages will go here -->
-
-                            {% for chat in chat_history %}
-                            
-                            <div class=" chat-message {% if chat.user.username == loggedinUser %}from-loggedin-user{% endif %}">
-                                <div class=" mx-2 my-1 rounded d-flex flex-column"style="width: fit-content;max-width: 65%;background-color:#d1d0e8;{% if chat.user.username == loggedinUser %}background-color:#adaae4{% endif %}">
-                                    <div class="m-0 pt-1" style="border-bottom:1px solid black;">
-                                        <p class="d-flex flex-column m-0 px-2 my-0 {% if chat.user.username == loggedinUser %}align-items-end{% else %}align-items-start {% endif %}" style="font-size:smaller; ">{{chat.user.username}}</p>
-                                    </div>
-                                    <span class="mx-2 mt-2" style="font-size:small;">{{ chat.message }}</span>
-                               
-                                    <div >
-                                        <p class=" d-flex flex-column text-muted mx-2 my-2 mb-1 {% if chat.user.username == loggedinUser %}align-items-start{% else %}align-items-end {% endif %}" style="font-size:x-small;">{{chat.date | time}}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <div class=" ">
-                        <!-- Message input -->
-                        <form class="card-footer d-flex flex-row" method="post" action="">
-                            {% csrf_token %}
-                            {% for field in Message_field %}
-                            {{ field }}
-                        {% endfor %}
-
-                            <button id="sendButton" type="submit" class="btn btn-success btn-sm mx-2">Send</button>
-                        </form>
-
-                    </div>
-                </div>
-            </div>
-
+            <span class="flex-grow-1"></span>
+            <button class="btn mx-2" id="fullscreenButton"><i class="fa fa-expand"></i></button>
 
         </div>
+        <!-- Chat box -->
+        <div class="card">
+            <div class="card-body">
+                <div id="chatBox" class="d-flex flex-column shadow-lg " style="height: 350px; overflow-y: scroll;">
+                    <!-- Chat messages will go here -->
+
+                    {% for chat in chat_history %}
+
+                    <div class=" chat-message {% if chat.user.username == loggedinUser %}from-loggedin-user{% endif %}">
+                        <div class=" mx-2 my-1 rounded d-flex flex-column"
+                            style="width:fit-content; max-width: 65%; background-color:#d1d0e8; {% if chat.user.username == loggedinUser %} background-color:#adaae4 {% endif %} ">
+                            <div class="m-0 pt-1" style="border-bottom:1px solid black;">
+                                <p class="d-flex flex-column m-0 px-2 my-0 {% if chat.user.username == loggedinUser %}align-items-end{% else %}align-items-start {% endif %}"
+                                    style="font-size:smaller; ">{{chat.user.username}}</p>
+                            </div>
+                            <span class="mx-2 mt-2" style="font-size:small;">{{ chat.message }}</span>
+
+                            <div>
+                                <p class=" d-flex flex-column text-muted mx-2 my-2 mb-1 {% if chat.user.username == loggedinUser %}align-items-start{% else %}align-items-end {% endif %}"
+                                    style="font-size:x-small;">{{chat.date | time}}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class=" ">
+                <!-- Message input -->
+                <form class="card-footer d-flex flex-row" method="post" action="">
+                    {% csrf_token %}
+                    {% for field in Message_field %}
+                    {{ field }}
+                    {% endfor %}
+
+                    <button id="sendButton" type="submit" class="btn btn-success btn-sm mx-2">Send</button>
+                </form>
+
+            </div>
+        </div>
     </div>
+</div>
 
-    {{ username|json_script:"json-username" }}
-    {{loggedinUser|json_script:"loggedin-user" }}
-    {{common_room_name|json_script:"common-room-name" }}
-    <script>
+{{ username|json_script:"json-username" }}
+{{loggedinUser|json_script:"loggedin-user" }}
+{{common_room_name|json_script:"common-room-name" }}
+<script>
 
-        function scrollToBottom() {
-            var chatBox = document.getElementById('chatBox');
-            chatBox.scrollTop = chatBox.scrollHeight;
+    function scrollToBottom() {
+        var chatBox = document.getElementById('chatBox');
+        chatBox.scrollTop = chatBox.scrollHeight;
+    }
+
+    const userName = JSON.parse(document.getElementById('json-username').textContent);
+    const loggedInUser = JSON.parse(document.getElementById('loggedin-user').textContent);
+    const commonRoomName = JSON.parse(document.getElementById('common-room-name').textContent);
+    const chatSocket = new WebSocket(
+        'ws://'
+        + window.location.host
+        + '/ws/chat_'
+        + userName
+        + '/'
+
+    );
+
+    chatSocket.onopen = function (e) {
+        console.log("Connection established");
+    };
+
+    chatSocket.onerror = function (e) {
+        console.error('WebSocket error:', e);
+    };
+
+    chatSocket.onclose = function (e) {
+        if (e.wasClean) {
+            console.log('WebSocket closed cleanly, code: ' + e.code + ', reason: ' + e.reason);
+        } else {
+            console.error('WebSocket connection abruptly closed.');
         }
+    };
 
-        const userName = JSON.parse(document.getElementById('json-username').textContent);
-        const loggedInUser = JSON.parse(document.getElementById('loggedin-user').textContent);
-        const commonRoomName = JSON.parse(document.getElementById('common-room-name').textContent);
-        const chatSocket = new WebSocket(
-            'ws://'
-            + window.location.host
-            + '/ws/chat_'
-            + userName
-            + '/'
 
-        );
+    chatSocket.onmessage = function (e) {
+        const data = JSON.parse(event.data);
+        const logged = data.logged;
+        const chatBox = document.querySelector('#chatBox');
+        const messageDiv = document.createElement('div');
+        messageDiv.id = 'messageDiv';
+        if (data.logged == loggedInUser) {
+            messageDiv.className = ' from-loggedin-user ';
 
-        chatSocket.onopen = function (e) {
-            console.log("Connection established");
-        };
 
-        chatSocket.onerror = function (e) {
-            console.error('WebSocket error:', e);
-        };
+        }
+        else {
+            messageDiv.className = ' chat-message ';
 
-        chatSocket.onclose = function (e) {
-            if (e.wasClean) {
-                console.log('WebSocket closed cleanly, code: ' + e.code + ', reason: ' + e.reason);
-            } else {
-                console.error('WebSocket connection abruptly closed.');
+        }
+        // messageDiv.childNodes[1].backgroundColor
+        if (data.message) {
+            messageDiv.innerHTML = (
+
+                '<div class=" mx-2 my-1 rounded d-flex flex-column"style="width: fit-content;max-width: 65%;">'
+                + '<div class="m-0 pt-1"  style="border-bottom:1px solid black;">'
+                + '<p style="font-size:smaller;">'
+                + data.logged
+                + '</p></div>'
+                + '<span class="mx-2 mt-2" style="font-size:small;">'
+                + data.message
+                + '</span>'
+
+                + '<div><p style="font-size:x-small;">'
+                + '{{current_time}}'
+                + '</p></div>'
+
+                + '</div>'
+
+            );
+
+            if (data.logged == loggedInUser) {
+                messageDiv.children[0].style.backgroundColor = " #adaae4";
+                messageDiv.childNodes[0].childNodes[0].childNodes[0].className = "d-flex flex-column m-0 px-2 my-0  align-items-end";
+                messageDiv.childNodes[0].childNodes[2].childNodes[0].className = " d-flex flex-column text-muted mx-2 my-2 mb-1 align-items-start";
             }
-        };
+            else {
 
+                messageDiv.children[0].style.backgroundColor = "#d1d0e8";
+                messageDiv.childNodes[0].childNodes[0].childNodes[0].className = "d-flex flex-column m-0 px-2 my-0 align-items-start";
+                messageDiv.childNodes[0].childNodes[2].childNodes[0].className = " d-flex flex-column text-muted mx-2 my-2 mb-1 align-items-end";
 
-        chatSocket.onmessage = function (e) {
-            const data = JSON.parse(event.data);
-            const logged = data.logged;
-            const chatBox = document.querySelector('#chatBox');
-            const messageDiv = document.createElement('div');
-            messageDiv.id = 'messageDiv';
-            if(data.logged == loggedInUser){
-                messageDiv.className = ' from-loggedin-user ';
-                
-
-            }
-            else{
-                messageDiv.className = ' chat-message ';
-               
-            }
-            // messageDiv.childNodes[1].backgroundColor
-            if (data.message) {
-                messageDiv.innerHTML = (
-
-                    '<div class=" mx-2 my-1 rounded d-flex flex-column"style="width: fit-content;max-width: 65%;">'                   
-                    +'<div class="m-0 pt-1"  style="border-bottom:1px solid black;">'
-                    +'<p style="font-size:smaller;">'
-                    +data.logged
-                    +'</p></div>'
-                    +'<span class="mx-2 mt-2" style="font-size:small;">'
-                    +data.message
-                    +'</span>'
-                
-                    +'<div><p style="font-size:x-small;">'
-                    +'{{current_time}}'
-                    +'</p></div>'
-                    
-                    +'</div>'
-                    
-                );  
-                    
-                if(data.logged == loggedInUser){
-                    messageDiv.children[0].style.backgroundColor = " #adaae4";
-                    messageDiv.childNodes[0].childNodes[0].childNodes[0].className = "d-flex flex-column m-0 px-2 my-0  align-items-end";
-                    messageDiv.childNodes[0].childNodes[2].childNodes[0].className = " d-flex flex-column text-muted mx-2 my-2 mb-1 align-items-start";
-                }
-                else{
-                    
-                    messageDiv.children[0].style.backgroundColor = "##d1d0e8";
-                    messageDiv.childNodes[0].childNodes[0].childNodes[0].className = "d-flex flex-column m-0 px-2 my-0 align-items-start";
-                    messageDiv.childNodes[0].childNodes[2].childNodes[0].className = " d-flex flex-column text-muted mx-2 my-2 mb-1 align-items-end";
-   
-                }
-
-                chatBox.appendChild(messageDiv);
-                
-                scrollToBottom();
-                
-            } else {
-                alert('The message was empty!')
             }
 
-        };
+            chatBox.appendChild(messageDiv);
 
-        var messageInput = document.getElementById('messageInput');
-        var sendButton = document.getElementById('sendButton');
-        
-        const form = document.querySelector('form');
-        form.addEventListener('submit', function (event) {
-            event.preventDefault();
-            const message = messageInput.value;
-            chatSocket.send(JSON.stringify({
-                'message': message,
-                'logged': loggedInUser,
-                'username':userName,
-                
+            scrollToBottom();
 
-            }));
-            messageInput.value = '';
-            
-        });
-
-
-        
-        scrollToBottom(); 
-
-    </script>
-
-    <style>
-        .chat-message {
-            display: flex;
-            flex-direction: column;
-            align-items:flex-start;
+        } else {
+            alert('The message was empty!')
         }
-        
-        .from-loggedin-user {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
+
+    };
+
+    var messageInput = document.getElementById('messageInput');
+    var sendButton = document.getElementById('sendButton');
+
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const message = messageInput.value;
+        chatSocket.send(JSON.stringify({
+            'message': message,
+            'logged': loggedInUser,
+            'username': userName,
+
+
+        }));
+        messageInput.value = '';
+
+    });
+
+
+
+    scrollToBottom();
+
+
+
+
+    const elem = document.getElementById("fulscreenDiv");
+    const button = document.getElementById("fullscreenButton");
+    const chatBox = document.getElementById("chatBox");
+    const idForWidth = document.getElementById("idForWidth");
+    button.addEventListener('click', function () {
+        if (!document.fullscreenElement) {
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen();
+            } else if (elem.webkitRequestFullscreen) { 
+                elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { 
+                elem.msRequestFullscreen();
+            }
+
+            idForWidth.style.height = "max-content";
+            idForWidth.style.position = "inherit";
+
+
+
+        } else {
+            if (document.exitFullscreen) {
+                document.exitFullscreen();
+            } else if (document.webkitExitFullscreen) { 
+                document.webkitExitFullscreen();
+            } else if (document.msExitFullscreen) { 
+                document.msExitFullscreen();
+            }
+            idForWidth.style.width = "";
+            idForWidth.style.height = "";
         }
-        .self-msg{
-            background-color: #b9e5df;
+        scrollToBottom();
+    });
+    document.addEventListener('fullscreenchange', function () {
+        if (!document.fullscreenElement) {
+            idForWidth.style.width = "";
+            idForWidth.style.height = "";
         }
-        .other-msg{
-            background-color: #d2dad9;
-        }
-    </style>
+        scrollToBottom();
+    });
+
+
+</script>
+
+<style>
+    .chat-message {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .from-loggedin-user {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+    }
+
+    .self-msg {
+        background-color: #b9e5df;
+    }
+
+    .other-msg {
+        background-color: #d2dad9;
+    }
+</style>
 {% endblock %}

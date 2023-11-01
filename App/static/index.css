@@ -8,7 +8,10 @@
     color: white;
 }
 
-.btn-success:hover ,.btn-success:active:focus, .btn-success:focus , .btn-success:active {
+.btn-success:hover,
+.btn-success:active:focus,
+.btn-success:focus,
+.btn-success:active {
     background-color: #9d98ff;
     border-color: #9d98ff;
     color: white;
@@ -28,7 +31,9 @@
     border-color: #9d98ff;
 }
 
-.btn-outline-danger:active:focus , .btn-outline-danger:focus , .btn-outline-danger:active {
+.btn-outline-danger:active:focus,
+.btn-outline-danger:focus,
+.btn-outline-danger:active {
     box-shadow: none;
     background-color: #9d98ff;
     border-color: none;
@@ -44,4 +49,14 @@
 
 .bg-message {
     background-color: #9d98ff;
+}
+
+#fulscreenDiv {
+    height: 100%;
+}
+
+@media only screen and (max-height: 600px) {
+    #fulscreenDiv {
+        height: 200vh;
+    }
 }
